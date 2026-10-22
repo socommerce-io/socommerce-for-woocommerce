@@ -27,6 +27,16 @@ class Test_Fallback_Endpoint extends Plugin_Test_Case {
 	}
 
 	/**
+	 * The answer is nobody's to cache: a page cache keeping REST answers would hand one shopper's
+	 * answer to the next.
+	 */
+	public function test_the_answer_forbids_caching() {
+		$this->rest( 'POST', self::ROUTE, array( 'ref' => self::CODE ) );
+
+		$this->assertTrue( defined( 'DONOTCACHEPAGE' ) && DONOTCACHEPAGE );
+	}
+
+	/**
 	 * The endpoint runs as a REST request, where WooCommerce has started no session yet.
 	 */
 	public function test_a_session_is_started_when_the_request_has_none() {

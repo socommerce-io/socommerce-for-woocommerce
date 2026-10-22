@@ -102,6 +102,19 @@ final class Plugin {
 	}
 
 	/**
+	 * Tells every page cache to leave this answer alone. LiteSpeed Cache, WP Rocket, W3 Total
+	 * Cache and WP Super Cache honour the constant; the headers reach the rest. A landing that
+	 * stored the code, the endpoint that stores it and the status answer all change per request
+	 * or per activation, and a cached copy of any of them misleads.
+	 */
+	public static function forbid_caching(): void {
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- the page caches' own switch.
+		}
+		nocache_headers();
+	}
+
+	/**
 	 * Lists the cookie with the WP Consent API, so a banner can show it under marketing.
 	 */
 	public function declare_cookie(): void {

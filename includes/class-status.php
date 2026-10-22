@@ -41,9 +41,11 @@ class Status {
 	}
 
 	/**
-	 * The answer, never cached so a deactivation shows at once.
+	 * The answer, never cached so a deactivation shows at once: a page cache that keeps REST
+	 * answers (LiteSpeed Cache does) would otherwise go on saying "active" for a week.
 	 */
 	public function answer(): WP_REST_Response {
+		Plugin::forbid_caching();
 		$response = new WP_REST_Response(
 			array(
 				'version'             => SOCOMMERCE_FOR_WOOCOMMERCE_VERSION,

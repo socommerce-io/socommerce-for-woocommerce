@@ -72,12 +72,8 @@ class Landing {
 		$this->carrier->remember( $code );
 
 		// A page that stored the code must not be cached: a cached copy would carry the marker to
-		// a visitor whose session holds nothing. LiteSpeed Cache, WP Rocket, W3 Total Cache and
-		// WP Super Cache honour the constant; the headers reach the rest.
-		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
-			define( 'DONOTCACHEPAGE', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- the page caches' own switch.
-		}
-		nocache_headers();
+		// a visitor whose session holds nothing.
+		Plugin::forbid_caching();
 	}
 
 	/**
@@ -134,6 +130,7 @@ JS;
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function store( WP_REST_Request $request ) {
+		Plugin::forbid_caching();
 		$code = Code::normalise( $request->get_param( 'ref' ) );
 		if ( null === $code ) {
 			return new WP_Error( 'socommerce_not_a_code', __( 'Not a tracking code.', 'socommerce-for-woocommerce' ), array( 'status' => 400 ) );
