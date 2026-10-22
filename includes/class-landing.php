@@ -20,8 +20,7 @@ use WP_REST_Server;
  */
 class Landing {
 
-	const REST_NAMESPACE = 'socommerce/v1';
-	const MARKER         = 'socommerce-ref';
+	const MARKER = 'socommerce-ref';
 
 	/**
 	 * Where the code is kept.
@@ -97,7 +96,7 @@ class Landing {
 	 * Prints the fallback script on every page.
 	 */
 	public function print_script(): void {
-		$endpoint = wp_json_encode( esc_url_raw( rest_url( self::REST_NAMESPACE . '/ref' ) ), JSON_UNESCAPED_SLASHES );
+		$endpoint = wp_json_encode( esc_url_raw( rest_url( Plugin::REST_NAMESPACE . '/ref' ) ), JSON_UNESCAPED_SLASHES );
 		$marker   = self::MARKER;
 		$script   = <<<JS
 (function(){var r=new URLSearchParams(location.search).get("ref");if(!r)return;var m=document.querySelector('meta[name="{$marker}"]');function p(){fetch({$endpoint},{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({ref:r})}).catch(function(){});}if(!m||m.content!==r)p();document.addEventListener("wp_listen_for_consent_change",function(e){if(e.detail&&e.detail.marketing==="allow")p();});})();
@@ -110,7 +109,7 @@ JS;
 	 */
 	public function register_route(): void {
 		register_rest_route(
-			self::REST_NAMESPACE,
+			Plugin::REST_NAMESPACE,
 			'/ref',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,

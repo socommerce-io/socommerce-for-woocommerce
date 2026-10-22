@@ -50,24 +50,15 @@ class Notifications {
 	}
 
 	/**
-	 * Whether a delivery URL is Socommerce's. A shop can claim another address through the
-	 * `socommerce_for_woocommerce_delivery_url_is_ours` filter.
+	 * Whether a delivery URL is Socommerce's: its host, nothing else, decides.
 	 *
 	 * @param string $url A webhook's delivery URL.
 	 */
-	public function is_ours( string $url ): bool {
+	private function is_ours( string $url ): bool {
 		$host = wp_parse_url( $url, PHP_URL_HOST );
 		$host = is_string( $host ) ? strtolower( $host ) : '';
-		$ours = 'socommerce.io' === $host
+		return 'socommerce.io' === $host
 			|| '.socommerce.io' === substr( $host, -14 )
 			|| 1 === preg_match( self::MODAL_HOST, $host );
-
-		/**
-		 * Whether a webhook's delivery URL is Socommerce's, and its payload is to be trimmed.
-		 *
-		 * @param bool   $ours What the plugin decided.
-		 * @param string $url  The delivery URL.
-		 */
-		return (bool) apply_filters( 'socommerce_for_woocommerce_delivery_url_is_ours', $ours, $url );
 	}
 }

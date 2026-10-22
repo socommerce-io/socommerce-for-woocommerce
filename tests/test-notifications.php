@@ -7,8 +7,6 @@
 
 namespace Socommerce\WooCommerce\Tests;
 
-use Socommerce\WooCommerce\Notifications;
-use Socommerce\WooCommerce\Plugin;
 use WC_Webhook;
 
 /**
@@ -72,7 +70,7 @@ class Test_Notifications extends Plugin_Test_Case {
 	}
 
 	/**
-	 * Which addresses are Socommerce's.
+	 * Which addresses are Socommerce's: a delivery there is trimmed, anywhere else it is whole.
 	 *
 	 * @dataProvider addresses
 	 *
@@ -80,7 +78,11 @@ class Test_Notifications extends Plugin_Test_Case {
 	 * @param bool   $ours Whether it is ours.
 	 */
 	public function test_which_addresses_are_ours( string $url, bool $ours ) {
-		$this->assertSame( $ours, Plugin::instance()->notifications->is_ours( $url ) );
+		$order = $this->order();
+
+		$payload = $this->webhook( $url )->build_payload( $order->get_id() );
+
+		$this->assertSame( $ours, array( 'id' => $order->get_id() ) === $payload );
 	}
 
 	/**
@@ -101,24 +103,5 @@ class Test_Notifications extends Plugin_Test_Case {
 			'a shop elsewhere'             => array( 'https://example.com/hooks', false ),
 			'not a url'                    => array( 'nonsense', false ),
 		);
-	}
-
-	/**
-	 * A shop can name its own address as ours through the filter, and the trim follows.
-	 */
-	public function test_the_filter_can_claim_an_address() {
-		add_filter(
-			'socommerce_for_woocommerce_delivery_url_is_ours',
-			function ( bool $ours, string $url ): bool {
-				return $ours || 'https://relay.example/socommerce' === $url;
-			},
-			10,
-			2
-		);
-		$order = $this->order();
-
-		$payload = $this->webhook( 'https://relay.example/socommerce' )->build_payload( $order->get_id() );
-
-		$this->assertSame( array( 'id' => $order->get_id() ), $payload );
 	}
 }

@@ -30,7 +30,7 @@ class Status {
 	 */
 	public function register_route(): void {
 		register_rest_route(
-			Landing::REST_NAMESPACE,
+			Plugin::REST_NAMESPACE,
 			'/status',
 			array(
 				'methods'             => WP_REST_Server::READABLE,

@@ -13,7 +13,7 @@ if ( ! $socommerce_tests_dir ) {
 }
 
 if ( ! file_exists( $socommerce_tests_dir . '/includes/functions.php' ) ) {
-	echo "Could not find {$socommerce_tests_dir}/includes/functions.php. Run the suite inside wp-env: npm run test:php" . PHP_EOL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo "Could not find {$socommerce_tests_dir}/includes/functions.php. Run the suite inside wp-env: npm run test:php" . PHP_EOL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- a path of ours, on a terminal.
 	exit( 1 );
 }
 
@@ -41,7 +41,7 @@ function socommerce_tests_load_plugins() {
 function socommerce_tests_plugin_file( string $slug ): string {
 	$found = glob( WP_PLUGIN_DIR . '/' . $slug . '*/' . $slug . '.php' );
 	if ( ! $found ) {
-		echo "Could not find the {$slug} plugin under " . WP_PLUGIN_DIR . PHP_EOL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo "Could not find the {$slug} plugin under " . WP_PLUGIN_DIR . PHP_EOL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- a path of ours, on a terminal.
 		exit( 1 );
 	}
 	return $found[0];
@@ -64,7 +64,7 @@ function socommerce_tests_install_woocommerce() {
 	}
 
 	// Reload capabilities after install, see https://core.trac.wordpress.org/ticket/28374.
-	$GLOBALS['wp_roles'] = null; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+	$GLOBALS['wp_roles'] = null;
 	wp_roles();
 }
 tests_add_filter( 'setup_theme', 'socommerce_tests_install_woocommerce' );

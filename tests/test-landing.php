@@ -9,6 +9,7 @@ namespace Socommerce\WooCommerce\Tests;
 
 use Socommerce\WooCommerce\Carrier;
 use Socommerce\WooCommerce\Landing;
+use Socommerce\WooCommerce\Plugin;
 
 /**
  * The server stores the code in the cart session, marks the page, and sets a cookie only with consent.
@@ -38,17 +39,24 @@ class Test_Landing extends Plugin_Test_Case {
 	 * What the page's head holds.
 	 */
 	private function head(): string {
-		ob_start();
-		do_action( 'wp_head' );
-		return (string) ob_get_clean();
+		return $this->output_of( 'wp_head' );
 	}
 
 	/**
 	 * What the page's footer holds.
 	 */
 	private function footer(): string {
+		return $this->output_of( 'wp_footer' );
+	}
+
+	/**
+	 * What a theme hook prints.
+	 *
+	 * @param string $hook The hook's name.
+	 */
+	private function output_of( string $hook ): string {
 		ob_start();
-		do_action( 'wp_footer' );
+		do_action( $hook );
 		return (string) ob_get_clean();
 	}
 
@@ -175,7 +183,7 @@ class Test_Landing extends Plugin_Test_Case {
 
 		$footer = $this->footer();
 
-		$this->assertStringContainsString( rest_url( Landing::REST_NAMESPACE . '/ref' ), $footer );
+		$this->assertStringContainsString( rest_url( Plugin::REST_NAMESPACE . '/ref' ), $footer );
 		$this->assertStringContainsString( 'meta[name="' . Landing::MARKER . '"]', $footer );
 		$this->assertStringContainsString( 'wp_listen_for_consent_change', $footer );
 	}

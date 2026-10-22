@@ -13,6 +13,8 @@ namespace Socommerce\WooCommerce;
  */
 final class Plugin {
 
+	const REST_NAMESPACE = 'socommerce/v1';
+
 	/**
 	 * The one instance.
 	 *
@@ -61,7 +63,7 @@ final class Plugin {
 	 * @param string $plugin_file The plugin's main file.
 	 */
 	private function __construct( string $plugin_file ) {
-		$this->carrier       = new Carrier( new Cookies(), $plugin_file );
+		$this->carrier       = new Carrier( new Cookies(), plugin_basename( $plugin_file ) );
 		$this->landing       = new Landing( $this->carrier );
 		$this->checkout      = new Checkout( $this->carrier );
 		$this->status        = new Status();

@@ -26,21 +26,22 @@ class Carrier {
 	public $cookies;
 
 	/**
-	 * The plugin's main file, which the WP Consent API knows the plugin by.
+	 * The plugin's basename, `socommerce-for-woocommerce/socommerce-for-woocommerce.php`, which
+	 * the WP Consent API knows the plugin by.
 	 *
 	 * @var string
 	 */
-	private $plugin_file;
+	private $plugin_basename;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Cookies $cookies     The shopper's cookies.
-	 * @param string  $plugin_file The plugin's main file.
+	 * @param Cookies $cookies         The shopper's cookies.
+	 * @param string  $plugin_basename The plugin's basename.
 	 */
-	public function __construct( Cookies $cookies, string $plugin_file ) {
-		$this->cookies     = $cookies;
-		$this->plugin_file = $plugin_file;
+	public function __construct( Cookies $cookies, string $plugin_basename ) {
+		$this->cookies         = $cookies;
+		$this->plugin_basename = $plugin_basename;
 	}
 
 	/**
@@ -86,8 +87,8 @@ class Carrier {
 	 * Whether the shop's consent banner reports marketing consent through the WP Consent API.
 	 * A shop without the API reports nothing, so: no cookie.
 	 */
-	public function has_marketing_consent(): bool {
-		return function_exists( 'wp_has_consent' ) && wp_has_consent( 'marketing', plugin_basename( $this->plugin_file ) );
+	private function has_marketing_consent(): bool {
+		return function_exists( 'wp_has_consent' ) && wp_has_consent( 'marketing', $this->plugin_basename );
 	}
 
 	/**

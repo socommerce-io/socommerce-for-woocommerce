@@ -37,7 +37,7 @@ Socommerce's [terms of service](https://socommerce.io/terms) and [privacy policy
 
 1. Download the plugin zip from your Socommerce Integration tab, or from this directory.
 2. In WordPress, go to Plugins → Add New → Upload Plugin, choose the zip and activate it.
-3. Your Socommerce Integration tab will say "Plugin active" within a few hours (the service checks on its own schedule).
+3. Your Socommerce Integration tab will say "Plugin active" at Socommerce's next check of your shop, within six hours.
 
 Nothing needs configuring. If your shop uses a consent banner that supports the WP Consent API (Complianz, Moove GDPR Cookie Compliance, CookieYes and others), the marketing cookie follows the shopper's choice automatically.
 
@@ -45,7 +45,7 @@ Nothing needs configuring. If your shop uses a consent banner that supports the 
 
 = Does the plugin work without a consent banner? =
 
-Yes. The code lives in WooCommerce's cart session, which needs no consent. The 30-day cookie is only set when a banner that supports the WP Consent API reports marketing consent; a shop without one sets no cookie.
+Yes. The code lives in WooCommerce's cart session, which needs no consent. The 30-day cookie follows the WP Consent API: with an opt-in banner it is set only after the shopper accepts marketing cookies; with an opt-out banner until the shopper declines them; and, as the API itself rules, on a shop that has the API installed but no banner managing consent. A shop without the WP Consent API sets no cookie at all.
 
 = Does it work with my page cache? =
 
