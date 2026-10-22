@@ -1,0 +1,15 @@
+# What the release zip leaves out (git archive honours export-ignore).
+/.github            export-ignore
+/tests              export-ignore
+/bin                export-ignore
+/.wp-env.json       export-ignore
+/.phpcs.xml.dist    export-ignore
+/phpunit.xml.dist   export-ignore
+/composer.json      export-ignore
+/composer.lock      export-ignore
+/package.json       export-ignore
+/package-lock.json  export-ignore
+/.gitignore         export-ignore
+/.gitattributes     export-ignore
+/CLAUDE.md          export-ignore
+/README.md          export-ignore

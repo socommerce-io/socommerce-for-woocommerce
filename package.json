@@ -1,0 +1,20 @@
+{
+  "name": "socommerce-for-woocommerce",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Development tooling for the Socommerce for WooCommerce plugin: wp-env, the PHPUnit suite and the release zip.",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "env:destroy": "wp-env destroy",
+    "composer": "docker run --rm -v \"$PWD\":/app -w /app composer:2 composer",
+    "lint:php": "sh bin/in-tests-cli.sh vendor/bin/phpcs",
+    "test:php": "sh bin/in-tests-cli.sh vendor/bin/phpunit",
+    "zip": "sh bin/zip.sh",
+    "lint:php:fix": "sh bin/in-tests-cli.sh vendor/bin/phpcbf"
+  },
+  "devDependencies": {
+    "@wordpress/env": "^10.0.0"
+  }
+}

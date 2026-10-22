@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    name: Build and publish the plugin zip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: The tag names the plugin's version
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          grep -q "^ \* Version: *${version}$" socommerce-for-woocommerce.php || { echo "Plugin header is not ${version}"; exit 1; }
+          grep -q "^define( 'SOCOMMERCE_FOR_WOOCOMMERCE_VERSION', '${version}' );$" socommerce-for-woocommerce.php || { echo "Version constant is not ${version}"; exit 1; }
+          grep -q "^Stable tag: ${version}$" readme.txt || { echo "readme.txt stable tag is not ${version}"; exit 1; }
+
+      - name: Build the zip
+        run: sh bin/zip.sh "$GITHUB_REF_NAME"
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" socommerce-for-woocommerce.zip --title "$GITHUB_REF_NAME" --generate-notes

@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Lint and PHPUnit on wp-env
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install PHP development dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install wp-env
+        run: npm ci
+
+      - name: Start WordPress with WooCommerce
+        run: npx wp-env start
+
+      - name: Coding standards
+        run: npm run lint:php
+
+      - name: PHPUnit
+        run: npm run test:php
