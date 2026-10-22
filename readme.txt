@@ -5,7 +5,7 @@ Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
 WC requires at least: 9.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,9 @@ Yes, with the classic (shortcode) checkout and the block checkout, and with High
 Nothing by itself. See "How this plugin relates to the Socommerce service" above.
 
 == Changelog ==
+
+= 1.0.2 =
+* Activating or deactivating the plugin purges its status answer from LiteSpeed Cache and WP Rocket, so a 404 cached before installation does not outlive it.
 
 = 1.0.1 =
 * The status endpoint and the code endpoint tell page caches to leave their answers alone, so a shop whose cache keeps REST answers (LiteSpeed Cache does) shows a deactivation at once.

@@ -3,7 +3,7 @@
  * Plugin Name:       Socommerce for WooCommerce
  * Plugin URI:        https://github.com/socommerce-io/socommerce-for-woocommerce
  * Description:       Carries a creator's tracking code from the ad click to the order, so a shop connected to Socommerce attributes its sales reliably: behind a page cache, after a declined cookie banner, on the classic and the block checkout. Sends nothing to Socommerce on its own and stores nothing about the shopper.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Socommerce
  * Author URI:        https://socommerce.io
  * License:           GPL-2.0-or-later
@@ -20,7 +20,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SOCOMMERCE_FOR_WOOCOMMERCE_VERSION', '1.0.1' );
+define( 'SOCOMMERCE_FOR_WOOCOMMERCE_VERSION', '1.0.2' );
 define( 'SOCOMMERCE_FOR_WOOCOMMERCE_FILE', __FILE__ );
 
 require_once __DIR__ . '/includes/class-code.php';
@@ -43,6 +43,12 @@ add_action(
 		}
 	}
 );
+
+// A page cache that keeps REST answers (LiteSpeed Cache does, for a week) would go on answering
+// the 404 it cached before installation, or the 200 from before deactivation; the plugin purges
+// its own status answer at both moments.
+register_activation_hook( __FILE__, array( \Socommerce\WooCommerce\Plugin::class, 'purge_status_answer' ) );
+register_deactivation_hook( __FILE__, array( \Socommerce\WooCommerce\Plugin::class, 'purge_status_answer' ) );
 
 // The WP Consent API asks a plugin that sets cookies to say it follows the API; this one does.
 add_filter( 'wp_consent_api_registered_' . plugin_basename( __FILE__ ), '__return_true' );

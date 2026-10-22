@@ -7,6 +7,8 @@
 
 namespace Socommerce\WooCommerce\Tests;
 
+use Socommerce\WooCommerce\Plugin;
+
 /**
  * GET /wp-json/socommerce/v1/status answers four facts and nothing else.
  */
@@ -61,6 +63,27 @@ class Test_Status extends Plugin_Test_Case {
 	 */
 	public function test_the_translation_plugin_is_none_here() {
 		$this->assertSame( 'none', $this->status()['translation_plugin'] );
+	}
+
+	/**
+	 * Activating and deactivating both ask the page cache to drop the status answer, so a 404
+	 * cached before installation, or a 200 from before deactivation, does not outlive the fact.
+	 */
+	public function test_activation_and_deactivation_purge_the_cached_answer() {
+		$purged = array();
+		add_action(
+			'litespeed_purge_url',
+			function ( $url ) use ( &$purged ) {
+				$purged[] = $url;
+			}
+		);
+		$basename = plugin_basename( SOCOMMERCE_FOR_WOOCOMMERCE_FILE );
+
+		do_action( 'activate_' . $basename );
+		do_action( 'deactivate_' . $basename );
+
+		$status = rest_url( Plugin::REST_NAMESPACE . '/status' );
+		$this->assertSame( array( $status, $status ), $purged );
 	}
 
 	/**

@@ -115,6 +115,20 @@ final class Plugin {
 	}
 
 	/**
+	 * Drops the status answer from the shop's page cache, on activation and deactivation, so
+	 * Socommerce's next poll sees the plugin as it is. LiteSpeed Cache and WP Rocket are asked by
+	 * name; other caches are told per answer by `forbid_caching`, which cannot reach an answer
+	 * cached before the plugin existed.
+	 */
+	public static function purge_status_answer(): void {
+		$url = rest_url( self::REST_NAMESPACE . '/status' );
+		do_action( 'litespeed_purge_url', $url ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- LiteSpeed Cache's own action.
+		if ( function_exists( 'rocket_clean_files' ) ) {
+			rocket_clean_files( $url );
+		}
+	}
+
+	/**
 	 * Lists the cookie with the WP Consent API, so a banner can show it under marketing.
 	 */
 	public function declare_cookie(): void {
