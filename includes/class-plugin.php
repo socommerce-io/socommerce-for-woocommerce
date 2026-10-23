@@ -58,6 +58,13 @@ final class Plugin {
 	public $notifications;
 
 	/**
+	 * A sample's order delivered again when a person notes it.
+	 *
+	 * @var Samples
+	 */
+	public $samples;
+
+	/**
 	 * Builds the parts.
 	 *
 	 * @param string $plugin_file The plugin's main file.
@@ -68,6 +75,7 @@ final class Plugin {
 		$this->checkout      = new Checkout( $this->carrier );
 		$this->status        = new Status();
 		$this->notifications = new Notifications();
+		$this->samples       = new Samples();
 	}
 
 	/**
@@ -98,6 +106,7 @@ final class Plugin {
 		$this->checkout->register();
 		$this->status->register();
 		$this->notifications->register();
+		$this->samples->register();
 		add_action( 'init', array( $this, 'declare_cookie' ) );
 	}
 

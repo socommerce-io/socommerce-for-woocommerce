@@ -5,7 +5,7 @@ Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
 WC requires at least: 9.0
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,8 @@ Carries a creator's tracking code from the ad click to the order, for shops conn
 The plugin also:
 
 * answers a public, read-only status check at `/wp-json/socommerce/v1/status` with its version, your WooCommerce version, whether Order Attribution is on and which translation plugin is active, so your Socommerce Integration tab can say the plugin is active;
-* trims the order notifications your shop sends Socommerce down to the order number, so your shoppers' names, addresses and emails never leave your shop.
+* trims the order notifications your shop sends Socommerce down to the order number, so your shoppers' names, addresses and emails never leave your shop;
+* has WooCommerce notify Socommerce again when you add a note to a sample's order (an order Socommerce created to ship a creator a free sample), so the tracking you type reaches the creator within a minute whether you add it before or after marking the order Completed. The plugin itself still sends nothing.
 
 = How this plugin relates to the Socommerce service =
 
@@ -60,6 +61,9 @@ Yes, with the classic (shortcode) checkout and the block checkout, and with High
 Nothing by itself. See "How this plugin relates to the Socommerce service" above.
 
 == Changelog ==
+
+= 1.1.0 =
+* A note added to a sample's order saves the order again, so WooCommerce delivers it to Socommerce and the creator sees the tracking at once — whether the note comes before or after marking the order Completed. WooCommerce's own notes, a by-hand status change's included, change nothing; the plugin still sends nothing itself.
 
 = 1.0.2 =
 * Activating or deactivating the plugin purges its status answer from LiteSpeed Cache and WP Rocket, so a 404 cached before installation does not outlive it.

@@ -3,7 +3,7 @@
  * Plugin Name:       Socommerce for WooCommerce
  * Plugin URI:        https://github.com/socommerce-io/socommerce-for-woocommerce
  * Description:       Carries a creator's tracking code from the ad click to the order, so a shop connected to Socommerce attributes its sales reliably: behind a page cache, after a declined cookie banner, on the classic and the block checkout. Sends nothing to Socommerce on its own and stores nothing about the shopper.
- * Version:           1.0.2
+ * Version:           1.1.0
  * Author:            Socommerce
  * Author URI:        https://socommerce.io
  * License:           GPL-2.0-or-later
@@ -20,7 +20,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SOCOMMERCE_FOR_WOOCOMMERCE_VERSION', '1.0.2' );
+define( 'SOCOMMERCE_FOR_WOOCOMMERCE_VERSION', '1.1.0' );
 define( 'SOCOMMERCE_FOR_WOOCOMMERCE_FILE', __FILE__ );
 
 require_once __DIR__ . '/includes/class-code.php';
@@ -30,6 +30,7 @@ require_once __DIR__ . '/includes/class-landing.php';
 require_once __DIR__ . '/includes/class-checkout.php';
 require_once __DIR__ . '/includes/class-status.php';
 require_once __DIR__ . '/includes/class-notifications.php';
+require_once __DIR__ . '/includes/class-samples.php';
 require_once __DIR__ . '/includes/class-plugin.php';
 
 // Orders are read and written through WooCommerce's order object only, so High-Performance

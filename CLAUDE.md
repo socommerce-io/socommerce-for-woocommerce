@@ -16,6 +16,12 @@ Changing any of these means changing `data-ingestion` too.
 - **Trimmed delivery**: `{"id": N}` to any host matching `Notifications::MODAL_HOST`
   (`<workspace>--socommerce-ingestion-woocommerce-webhook[.region].modal.run`) or under
   `socommerce.io`.
+- **Sample order meta key**: `_socommerce_sample_request`, written by the service on the orders
+  it creates for samples (`Samples::META_KEY`). A person's note on such an order saves it again
+  (`set_date_modified( time() )` then `save()`, so the service's convergence on the modification
+  date sees a newer order); the service's `tracking_in_notes` and the plugin's `Samples::by_a_person`
+  must agree on what a person's note is: not WooCommerce's, and not its status sentence under a
+  manager's name.
 
 ## Rules
 
@@ -35,7 +41,8 @@ Changing any of these means changing `data-ingestion` too.
 recording jar) · `Carrier` (session + consent-gated cookie; `remember`, `recall`) · `Landing`
 (the `?ref=` landing, the page marker, the inline script, the `/ref` endpoint) · `Checkout`
 (order meta on both checkouts) · `Status` (the status endpoint) · `Notifications` (the
-trimmed payload) · `Plugin` (wiring, one instance).
+trimmed payload) · `Samples` (a sample's order saved again on a person's note, WOO-11) ·
+`Plugin` (wiring, one instance).
 
 ## Testing
 

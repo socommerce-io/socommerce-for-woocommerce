@@ -17,6 +17,7 @@ WordPress.org description; `docs/adr/0028` in the Socommerce repository is the d
 | Checkout, classic or block | The code (session first, then cookie) is written on the order as meta `_socommerce_ref`, through the order object, so HPOS holds. |
 | `GET /wp-json/socommerce/v1/status` | `{version, woocommerce_version, order_attribution, translation_plugin}`. Public, read-only, never cached. Socommerce polls it; a 404 means the plugin is not active. |
 | Webhook delivery to Socommerce | The payload is trimmed to `{"id": N}`. Deliveries to any other address are untouched. |
+| A person's note on a sample's order | The order (one carrying Socommerce's `_socommerce_sample_request` meta) is saved again with a fresh modification date, so WooCommerce delivers its ordinary `order.updated` and Socommerce reads the note as the parcel's tracking at once. WooCommerce's own notes — a status change made by hand included, which carries the manager's name — change nothing. Any other order is untouched. |
 
 ## Developing
 
