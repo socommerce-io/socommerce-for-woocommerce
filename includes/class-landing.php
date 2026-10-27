@@ -93,10 +93,11 @@ class Landing {
 	 */
 	public function print_script(): void {
 		$endpoint = wp_json_encode( esc_url_raw( rest_url( Plugin::REST_NAMESPACE . '/ref' ) ), JSON_UNESCAPED_SLASHES );
-		$marker   = self::MARKER;
-		$script   = <<<JS
-(function(){var r=new URLSearchParams(location.search).get("ref");if(!r)return;var m=document.querySelector('meta[name="{$marker}"]');function p(){fetch({$endpoint},{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({ref:r})}).catch(function(){});}if(!m||m.content!==r)p();document.addEventListener("wp_listen_for_consent_change",function(e){if(e.detail&&e.detail.marketing==="allow")p();});})();
-JS;
+		$script   = '(function(){var r=new URLSearchParams(location.search).get("ref");if(!r)return;'
+			. 'var m=document.querySelector(\'meta[name="' . self::MARKER . '"]\');'
+			. 'function p(){fetch(' . $endpoint . ',{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({ref:r})}).catch(function(){});}'
+			. 'if(!m||m.content!==r)p();'
+			. 'document.addEventListener("wp_listen_for_consent_change",function(e){if(e.detail&&e.detail.marketing==="allow")p();});})();';
 		wp_print_inline_script_tag( $script );
 	}
 
