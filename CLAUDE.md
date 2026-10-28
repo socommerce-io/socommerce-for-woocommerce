@@ -32,7 +32,8 @@ Changing any of these means changing `data-ingestion` too.
 - Orders are touched through the order object only (`update_meta_data`), never `postmeta`,
   so High-Performance Order Storage holds.
 - The version lives in three places kept equal by `Test_Status`: the plugin header, the
-  constant, `readme.txt`'s `Stable tag`.
+  constant, `readme.txt`'s `Stable tag`. `bin/check-version.sh` holds a release tag to the
+  same three before either release workflow publishes; a fourth place means changing both.
 - WordPress coding standards (`.phpcs.xml.dist`), with every `phpcs:ignore` carrying its reason.
 
 ## Modules (`includes/`)

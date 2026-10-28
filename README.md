@@ -50,6 +50,15 @@ push the tag: the release workflow checks the three match, builds the zip from t
 (minus what `.gitattributes` marks `export-ignore`) and publishes it as a GitHub release asset,
 which is what the Socommerce Integration tab links to.
 
+The same tag publishes to the WordPress.org directory (`wordpress-org.yml`): the tagged tree,
+minus the same `export-ignore` files, is committed to the plugin's SVN trunk and to
+`tags/X.Y.Z`. It does nothing until the repository has the `SVN_USERNAME` and `SVN_PASSWORD`
+secrets — the WordPress.org username `socommerce` and the SVN password set under Account &
+Security on its profile, which is not the login password. Once the directory approves the
+plugin, add the secrets and run the workflow by hand from the latest tag (Actions →
+WordPress.org → Run workflow, "Use workflow from" the tag) to publish the first version;
+every later tag publishes on its own. A version already in SVN is left alone.
+
 ## Licence
 
 GPL-2.0-or-later.
