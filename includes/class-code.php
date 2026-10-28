@@ -7,6 +7,8 @@
 
 namespace Socommerce\WooCommerce;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * A tracking code is what Socommerce mints for a creator's place on a product: six to
  * thirty-two of a-z and 0-9 (the service's own constraint). It is not a secret; it travels in

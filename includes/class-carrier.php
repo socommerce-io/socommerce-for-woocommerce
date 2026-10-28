@@ -7,6 +7,8 @@
 
 namespace Socommerce\WooCommerce;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Keeps the code in WooCommerce's own cart session (about two days, no cookie of ours) and,
  * only when the shop's banner reports marketing consent through the WP Consent API, in a

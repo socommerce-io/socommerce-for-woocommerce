@@ -5,7 +5,7 @@ Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
 WC requires at least: 9.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ Yes, with the classic (shortcode) checkout and the block checkout, and with High
 Nothing by itself. See "How this plugin relates to the Socommerce service" above.
 
 == Changelog ==
+
+= 1.1.2 =
+* Every file of the plugin refuses being opened directly, as the WordPress.org directory asks. Nothing a shop or shopper sees changes.
 
 = 1.1.1 =
 * The fallback script is built from plain strings, as the WordPress.org Plugin Check asks. It prints exactly what it did before; nothing a shop or shopper sees changes.

@@ -7,6 +7,8 @@
 
 namespace Socommerce\WooCommerce;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Builds the parts once WooCommerce is loaded and hooks them. Held as a single instance so the
  * tests can reach the parts they need to look into.

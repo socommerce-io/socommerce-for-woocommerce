@@ -7,6 +7,8 @@
 
 namespace Socommerce\WooCommerce;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * The one place a cookie is read or sent, so the tests can replace it with a jar they can look
  * into. A written cookie is readable in the same request, as WordPress's own cookies are.

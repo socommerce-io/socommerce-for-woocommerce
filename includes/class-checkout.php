@@ -7,6 +7,8 @@
 
 namespace Socommerce\WooCommerce;
 
+defined( 'ABSPATH' ) || exit;
+
 use WC_Order;
 
 /**

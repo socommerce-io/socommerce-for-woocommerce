@@ -7,6 +7,8 @@
 
 namespace Socommerce\WooCommerce;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * A WooCommerce order webhook delivers the whole order, the shopper included, and no setting
  * omits them. Socommerce treats a delivery as a ping and re-reads the order without the shopper
